@@ -21,11 +21,15 @@ function MyComponent3() { //Create component 3
   ) // Return a DIV element than contains MyComponent 4
 }
 function MyComponent4(props) { //Create component 4
+  const [ age, setAge ] = React.useState(17); // Save in Age and in setAge the value from age and a funtion to refresh value in age
+
+  setTimeout(() => {
+    setAge(18); // Refresh the value of agr to 18
+  }, 2000); // Wait 1 //seconds to execute a code Block
   return(
     <div className="component-4">
-      <p>
-        My name is {props.name} and I am 17 years Old!
-      </p>
+      <p>My name is {props.name}!</p>
+      <p>My Age is {age}!</p>
     </div>
   ) //Return a DIV element than contains p element with the text and variable contatenation as a content
 }
