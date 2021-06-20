@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React JS</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!--Create a DIV to insert the React Components-->
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <!--Insert the Development CDN of React JS-->
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <!--Insert the Development CDN of React DOM JS-->
+
+  <script>
+    function myComponent1() { //Create component 1
+      const myName = 'Pedro Henrique'; //Declare myName variable to save a string 
+      return (
+        React.createElement('div', {className: 'component-1'}, 
+          React.createElement(myComponent2, {name: myName})
+        )
+      ) // Return a DIV(with a class) than contains component 2
+    }
+    function myComponent2(props) { //Create component 2 than recive props as a parameter
+      return (
+        React.createElement('div', {className: 'component-2'}, 
+          React.createElement(myComponent3, props) 
+        )
+      ) // Return a DIV(with a class) than contains component 3 and send props as a paramenter
+    }
+    function myComponent3(props) { //Create component 3 than recive props as a parameter
+      return (
+        React.createElement('div', {className: 'component-3'}, 
+          React.createElement(myComponent4, {name: props.name, age: 17})
+        )
+      ) // Return a DIV(with a class) than contains component 4 and send a object with name and age as paramenter
+    }
+    function myComponent4(props) { //Create component 4 and recive props as a parameter
+      return (
+        React.createElement('div', {className: 'component-4'}, 
+          React.createElement('p', null, `I am ${props.name} and I am ${props.age} years old!`)
+        )
+      ) // Return a DIV(with a class) than contains a P element tha contains a litle text with object atributtes concatenation
+    }
+    function  components() { //Create a main components
+      return React.createElement('div', {id: 'components'},
+        React.createElement(myComponent1))
+        // Return a DIV than contains the component 1 and your id is equal to "components"
+    }
+    ReactDOM.render( //Render the components
+      React.createElement(components), //Define the componet to be render
+      document.querySelector('#app') //Define locale where the components will be render
+    )
+  </script>
+</body>
+</html>
