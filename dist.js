@@ -1,21 +1,19 @@
-const NameContext = React.createContext('name'); // Create a const to save a React Context
-
 function MyComponent1() {
   //Create component 1
-  const myName = 'Pedro Henrique'; // Create a simple const to save a string
+  const myName = 'Pedro Henrique Hoffmann da Cunha'; // Create a simple const to save a string
 
-  return /*#__PURE__*/React.createElement(NameContext.Provider, {
-    value: myName
-  }, /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: "component1"
-  }, /*#__PURE__*/React.createElement(MyComponent2, null))); // Return a context and a DIV element than contains MyComponent
+  }, /*#__PURE__*/React.createElement(MyComponent2, null, /*#__PURE__*/React.createElement(MyComponent4, {
+    name: myName
+  }))); // Return a DIV element than contains MyComponent 2 and set wour children as MyComponent 4 with name=myName"
 }
 
-function MyComponent2() {
+function MyComponent2(props) {
   //Create component 2
   return /*#__PURE__*/React.createElement("div", {
     className: "component-2"
-  }, /*#__PURE__*/React.createElement(MyComponent3, null)); // Return a DIV element than contains MyComponent 3
+  }, props.children); // Return a DIV element than contains the children element recived from father element
 }
 
 function MyComponent3() {
@@ -25,11 +23,11 @@ function MyComponent3() {
   }, /*#__PURE__*/React.createElement(MyComponent4, null)); // Return a DIV element than contains MyComponent 4
 }
 
-function MyComponent4() {
+function MyComponent4(props) {
   //Create component 4
-  return /*#__PURE__*/React.createElement(NameContext.Consumer, null, NameContext => /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: "component-4"
-  }, /*#__PURE__*/React.createElement("p", null, "My name is ", NameContext, " and I am 17 years Old!"))); //Return a DIV element than contains p element with the text and variable contatenation as a content
+  }, /*#__PURE__*/React.createElement("p", null, "My name is ", props.name, " and I am 17 years Old!")); //Return a DIV element than contains p element with the text and variable contatenation as a content
 }
 
 function Components() {
