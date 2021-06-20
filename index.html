@@ -15,58 +15,6 @@
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <!--Insert the Development CDN of React DOM JS-->
 
-  <script>
-    const nameContext = React.createContext('name'); // Create a const to save a React Context
-    function myComponent1() { //Create component 1
-      const myName = 'Pedro Henrique'; // Create a simple const to save a string
-      return (
-        React.createElement(
-          nameContext.Provider,
-          { value: myName },
-          React.createElement(
-            'div',
-            {className: 'component-1'}, 
-            React.createElement(myComponent2)
-          )
-        )
-      ) // Return a element nameContext to provider information to child componets and a content, that is a DIV element with(class="component-1") and myComponent2
-    }
-    function myComponent2() { //Create component 2
-      return (
-        React.createElement('div', {className: 'component-2'}, 
-          React.createElement(myComponent3)
-        )
-      ) // Return a DIV(with a class) than contains component 3
-    }
-    function myComponent3() { //Create component 3
-      return (
-        React.createElement('div', {className: 'component-3'}, 
-          React.createElement(myComponent4)
-        )
-      ) // Return a DIV(with a class) than contains component 4
-    }
-    function myComponent4() { //Create component 4
-      return (
-        React.createElement(
-          nameContext.Consumer,
-          null,
-          nameContext => (
-            React.createElement('div', {className: 'component-4'}, 
-              React.createElement('p', null, `My name is ${nameContext} and I am 17 years old!`)
-            )
-          )
-        )
-      ) // Return a element than nameContext to consumer the data in a DIV(with a class="component-4") than contains a P element tha contains a litle text concatanation with a nameContext value
-    }
-    function  components() { //Create a main components
-      return React.createElement('div', {id: 'components'},
-        React.createElement(myComponent1))
-        // Return a DIV than contains the component 1 and your id is equal to "components"
-    }
-    ReactDOM.render( //Render the components
-      React.createElement(components), //Define the componet to be render
-      document.querySelector('#app') //Define locale where the components will be render
-    )
-  </script>
+  <script src="dist.js"></script>
 </body>
 </html>
