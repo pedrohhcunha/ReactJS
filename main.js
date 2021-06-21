@@ -1,9 +1,9 @@
-function MyComponent1() { //Create component 1
+function MyComponent1(props) { //Create component 1
   const myName = 'Pedro Henrique Hoffmann da Cunha'; // Create a simple const to save a string
   return(
     <div className="component1"> 
       <MyComponent2>
-        <MyComponent4 name={ myName } />
+          <MyComponent4 name={ myName } onClickIncrement={props.onClickIncrement} />
       </MyComponent2>
     </div>
   ) // Return a DIV element than contains MyComponent 2 and set wour children as MyComponent 4 with name=myName"
@@ -30,17 +30,47 @@ function MyComponent4(props) { //Create component 4
     <div className="component-4">
       <p>My name is {props.name}!</p>
       <p>My Age is {age}!</p>
+      <button type="button" onClick={ props.onClickIncrement } >Increment</button>
     </div>
   ) //Return a DIV element than contains p element with the text and variable contatenation as a content
 }
-function  Components() { //Create a main components
+function  Components(props) { //Create a main components
   return(
     <div id="components">
-      <MyComponent1/>
+      <MyComponent1 onClickIncrement={props.onClickIncrement}/>
     </div>
   ) // Return a DIV element than contains MyComponent
 }
+function ComponentBrother(props) {
+  return(
+    <ComponentChildBrother clicks={props.clicks}/>
+  )
+}
+function ComponentChildBrother(props) {
+  React.useEffect(()=>{
+    if(!localStorage.getItem('Clicks')){
+      localStorage.setItem('Clicks', props.clicks)
+    }
+  })
+  return(
+    <span>Count: {props.clicks}</span>
+  )
+}
+function AppComponent() {
+  const [click, setClicks] = React.useState(0)
+
+  function clickIncrements() {
+    console.log('click!!!')
+    setClicks(click + 1)
+  }
+  return(
+    <React.Fragment>
+      <Components onClickIncrement={clickIncrements}/>
+      <ComponentBrother clicks={click}/>
+    </React.Fragment>
+  )
+}
 ReactDOM.render( //Render the components
-  <Components/>, //Define the componet to be render
+  <AppComponent />, //Define the componet to be render
   document.querySelector('#app') //Define locale where the components will be render
 )

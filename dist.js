@@ -1,11 +1,12 @@
-function MyComponent1() {
+function MyComponent1(props) {
   //Create component 1
   const myName = 'Pedro Henrique Hoffmann da Cunha'; // Create a simple const to save a string
 
   return /*#__PURE__*/React.createElement("div", {
     className: "component1"
   }, /*#__PURE__*/React.createElement(MyComponent2, null, /*#__PURE__*/React.createElement(MyComponent4, {
-    name: myName
+    name: myName,
+    onClickIncrement: props.onClickIncrement
   }))); // Return a DIV element than contains MyComponent 2 and set wour children as MyComponent 4 with name=myName"
 }
 
@@ -33,19 +34,54 @@ function MyComponent4(props) {
 
   return /*#__PURE__*/React.createElement("div", {
     className: "component-4"
-  }, /*#__PURE__*/React.createElement("p", null, "My name is ", props.name, "!"), /*#__PURE__*/React.createElement("p", null, "My Age is ", age, "!")); //Return a DIV element than contains p element with the text and variable contatenation as a content
+  }, /*#__PURE__*/React.createElement("p", null, "My name is ", props.name, "!"), /*#__PURE__*/React.createElement("p", null, "My Age is ", age, "!"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: props.onClickIncrement
+  }, "Increment")); //Return a DIV element than contains p element with the text and variable contatenation as a content
 }
 
-function Components() {
+function Components(props) {
   //Create a main components
   return /*#__PURE__*/React.createElement("div", {
     id: "components"
-  }, /*#__PURE__*/React.createElement(MyComponent1, null)); // Return a DIV element than contains MyComponent
+  }, /*#__PURE__*/React.createElement(MyComponent1, {
+    onClickIncrement: props.onClickIncrement
+  })); // Return a DIV element than contains MyComponent
+}
+
+function ComponentBrother(props) {
+  return /*#__PURE__*/React.createElement(ComponentChildBrother, {
+    clicks: props.clicks
+  });
+}
+
+function ComponentChildBrother(props) {
+  React.useEffect(() => {
+    if (!localStorage.getItem('Clicks')) {
+      localStorage.setItem('Clicks', props.clicks);
+    }
+  });
+  return /*#__PURE__*/React.createElement("span", null, "Count: ", props.clicks);
+}
+
+function AppComponent() {
+  const [click, setClicks] = React.useState(0);
+
+  function clickIncrements() {
+    console.log('click!!!');
+    setClicks(click + 1);
+  }
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Components, {
+    onClickIncrement: clickIncrements
+  }), /*#__PURE__*/React.createElement(ComponentBrother, {
+    clicks: click
+  }));
 }
 
 ReactDOM.render(
 /*#__PURE__*/
 //Render the components
-React.createElement(Components, null), //Define the componet to be render
+React.createElement(AppComponent, null), //Define the componet to be render
 document.querySelector('#app') //Define locale where the components will be render
 );
